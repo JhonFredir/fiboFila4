@@ -4,6 +4,7 @@ Luisa Maria Cardenas
 Cristian Gabriel Alvarado
 Daniel Ramirez Restrepo
 Miguel Angel Moreno
+Co-Autor destacado: John Sanabria
 */
 
 /**
