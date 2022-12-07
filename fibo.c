@@ -30,6 +30,7 @@ void* fibonacci_over_vector(void *);
 int *vector;
 int nprocesadores;
 int stride;
+int vl_global;
 
 int main(int argc, char *argv[]) {
   int vl, // vl: vector_length
@@ -44,16 +45,17 @@ int main(int argc, char *argv[]) {
     exit(1);
   }
   vl = atoi(argv[1]);
+  vl_global= vl;
   mr = atoi(argv[2]);
 
   nprocesadores = get_nprocs();
-  
+  /*
   if (vl%nprocesadores != 0) {
   
-    printf("\t the <vector_length>  %d is not a multiple of %d <max_random>\n", vl , nprocesadores);
+    printf("\t the <vector_length>  %d is not a multiple of %d available processors\n", vl , nprocesadores);
     exit(1);
   }
-  
+  */
   stride = (int)(vl/nprocesadores);
   // Inicializacion de variables tipo vector
   vector = (int*)malloc(sizeof(int) * vl);
@@ -102,10 +104,15 @@ void* fibonacci_over_vector(void *pos) {
   int i; // el "i" es la iteracion del hilo.
   //"thread_id" es el numero del hilo
 
-  for (i = 0; i < stride; i++) {
+  for (i = 0; i <= vl_global; i++) {
 
   int posicion = ( i * nprocesadores ) + thread_id ;
-   
+ 
+if (posicion >= vl_global) {
+  break;
+}
+
+
   printf("Soy el hilo %d opero la posicion [%d] \n",thread_id,posicion );
 
     vector[posicion] = fibonacci(vector[posicion]);
